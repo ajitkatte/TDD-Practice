@@ -1,25 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Bowling
+﻿namespace Bowling
 {
     public class ScoreKeeper
     {
-
-        private int ball;
-        private int[] allThrows = new int[21];
-        private int currentThrow = 0;
+        private int _ball;
+        private readonly int[] _allThrows = new int[21];
+        private int _currentThrow;
 
         public void AddThrowInGame(int pins)
         {
-            allThrows[currentThrow++] = pins;
+            _allThrows[_currentThrow++] = pins;
         }
 
         public int CalculateFrameScore(int theFrame)
         {
-            ball = 0;
+            _ball = 0;
             int score = 0;
             for (int currentFrame = 0;currentFrame < theFrame;currentFrame++)
             {
@@ -30,15 +24,14 @@ namespace Bowling
                 else
                     score = score + TwoBalls();
             }
-
             return score;
         }
 
         private bool CheckStrike()
         {
-            if (allThrows[ball] == 10)
+            if (_allThrows[_ball] == 10)
             {
-                ball++;
+                _ball++;
                 return true;
             }
             return false;
@@ -46,9 +39,9 @@ namespace Bowling
 
         private bool CheckSpare()
         {
-            if ((allThrows[ball] + allThrows[ball + 1]) == 10)
+            if ((_allThrows[_ball] + _allThrows[_ball + 1]) == 10)
             {
-                ball = ball + 2;
+                _ball = _ball + 2;
                 return true;
             }
             return false;
@@ -56,22 +49,16 @@ namespace Bowling
 
         private int NextBalls()
         {
-            return allThrows[ball] + allThrows[ball + 1];
+            return _allThrows[_ball] + _allThrows[_ball + 1];
         }
         private int NextBall()
         {
-            return allThrows[ball];
+            return _allThrows[_ball];
         }
 
         private int TwoBalls()
         {
-            return allThrows[ball++] + allThrows[ball++];
+            return _allThrows[_ball++] + _allThrows[_ball++];
         }
-
-        
-
     }
-
-
-
 }
